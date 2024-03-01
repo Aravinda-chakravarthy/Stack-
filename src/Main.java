@@ -1,43 +1,54 @@
 import java.util.Arrays;
 
 public class Main{
-    public static int binarySearch(int[] arr, int target) {
-        int left = 0;
-        int right = arr.length - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-
-
-            if (arr[mid] == target)
-                return mid;
-
-
-            if (arr[mid] < target)
-                left = mid + 1;
-
-
-            else
-                right = mid - 1;
-        }
-
-
-        return -1;
+    private int arr[];
+    private int top;
+    private int capacity;
+    public Main(int size){
+        arr = new int[size];
+        capacity = size;
+        top = -1;
     }
-
-    public static void main(String[] args) {
-        int[] arr = {2, 3, 4, 10, 40};
-        int target = 10;
-
-
-        Arrays.sort(arr);
-
-
-        int result = binarySearch(arr, target);
-
-        if (result == -1)
-            System.out.println("Element not present");
-        else
-            System.out.println("Element found at index " + result);
+    public void push(int x){
+        if (isFull()){
+            System.out.println("Stack overflow");
+            System.exit(1);
+        }
+        System.out.println("Inserting " +x);
+        arr[++top] = x;
+    }
+    public int pop(){
+        if (isEmpty()){
+            System.out.println("Stack is Empty");
+            System.exit(1);
+        }
+        return arr[top--];
+    }
+    public int getSize(){
+        return top+1;
+    }
+    public Boolean isEmpty(){
+        return top == -1;
+    }
+    public Boolean isFull(){
+        return top == capacity-1;
+    }
+    public void printstack(){
+        for(int i=0; i<=top; i++){
+            System.out.print(arr[i] + " , ");
+        }
+    }
+    public static void main(String[] args){
+        Main stack = new Main(5);
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        System.out.println("Stack : ");
+        stack.printstack();
+        stack.pop();
+        stack.pop();
+        System.out.println("\nAfter popping out:");
+        stack.printstack();
     }
 }
